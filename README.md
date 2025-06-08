@@ -20,4 +20,4 @@ Model Workflow
 3. Evaluation: Performance is assessed via accuracy, precision, recall, F1-score, and confusion matrix to understand classification effectiveness, particularly for the minority hazardous class.
 4. Prediction: Once trained, the model can classify new asteroid data input by users to assess potential hazard.
 
-->The model currently achieves 92% accuracy with moderate recall (54%) on hazardous asteroid detection, indicating room for improvement in identifying rare but critical cases.
+**The model currently achieves 92% accuracy with moderate recall (54%) on hazardous asteroid detection, indicating room for improvement in identifying rare but critical cases.
