@@ -9,7 +9,7 @@ from imblearn.over_sampling  import SMOTE
 # from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 
-import sklearn.metrics as skm
+
 data=pd.read_csv("neo.csv")
 df=pd.DataFrame(data)
 
@@ -20,38 +20,36 @@ x = df[['avg_diameter', 'est_diameter_min','est_diameter_max','relative_velocity
 X_train,X_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
 
 
-smote=SMOTE(random_state=42)
-x_ros,y_ros=smote.fit_resample(X_train,y_train)
+smote=SMOTE(sampling_strategy='auto', random_state=42)
+x_smo,y_smo=smote.fit_resample(X_train,y_train)
 
 
 # clf=DecisionTreeClassifier()
 clf = RandomForestClassifier(class_weight='balanced')
-clf.fit(x_ros,y_ros)
+clf.fit(x_smo,y_smo)
 
-# min_dia=float(input("Enter neo's estimated mininum diameter:\n"))
-# max_dia=float(input("Enter neo's estimated maximum diameter:\n"))
-# rela_vel=float(input("Enter neo's relative velocity:\n"))
-# miss_dis=float(input("Enter neo's estimated miss distance:\n"))
-# abs_mag=float(input("Enter neo's estimated absolute magnitude:\n"))
-# avg_dia=(min_dia+max_dia)/2
+min_dia=float(input("Enter neo's estimated mininum diameter:\n"))
+max_dia=float(input("Enter neo's estimated maximum diameter:\n"))
+rela_vel=float(input("Enter neo's relative velocity:\n"))
+miss_dis=float(input("Enter neo's estimated miss distance:\n"))
+abs_mag=float(input("Enter neo's estimated absolute magnitude:\n"))
+avg_dia=(min_dia+max_dia)/2
 
-# feature_names = ['avg_diameter','est_diameter_min', 'est_diameter_max', 'relative_velocity', 'miss_distance', 'absolute_magnitude']
-# input=pd.DataFrame([[avg_dia,min_dia,max_dia,rela_vel,miss_dis,abs_mag]], columns=feature_names)
-
-
-# print(X.head())
-# print(X_test.head())
+feature_names = ['avg_diameter','est_diameter_min', 'est_diameter_max', 'relative_velocity', 'miss_distance', 'absolute_magnitude']
+input=pd.DataFrame([[avg_dia,min_dia,max_dia,rela_vel,miss_dis,abs_mag]], columns=feature_names)
 
 
 y_pred=clf.predict(X_test)
 
 # # print(y_pred)
 # # print(y_test)
+# print(X.head())
+# print(X_test.head())
 
-# if y_pred[0]:
-#     print("The Near Earth Object is hazardous and should be monitored.")
-# else:
-#     print("The Near Earth Object is not hazardous.")
+if y_pred[0]:
+    print("The Near Earth Object is hazardous and should be monitored.")
+else:
+    print("The Near Earth Object is not hazardous.")
 
-print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
-print("\nClassification Report:\n", classification_report(y_test, y_pred))
+# print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+# print("\nClassification Report:\n", classification_report(y_test, y_pred))
