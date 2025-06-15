@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from imblearn.over_sampling  import SMOTE
+import sys
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 # from sklearn.metrics import roc_curve, roc_auc_score
@@ -36,40 +37,45 @@ def my_model():
     feature_names = ['avg_diameter','est_diameter_min', 'est_diameter_max', 'relative_velocity', 'miss_distance', 'absolute_magnitude']
     input_val=pd.DataFrame([[avg_dia,min_dia,max_dia,rela_vel,miss_dis,abs_mag]], columns=feature_names)
 
-    y_pred=clf.predict(X_test)
-
+    y_pred=clf.predict(input_val)
+    
     if y_pred[0]:
-        print("The Near Earth Object is hazardous and should be monitored.")
+        print("The Near Earth Object is hazardous and should be monitored.\n")
     else:
-        print("The Near Earth Object is not hazardous.")
+        print("The Near Earth Object is not hazardous.\n")
 
 def main():
+    while True:
+        print("Welcome to AstroGuard\nPlease select an option corresponding to the action you wish to perform.\n1)Predict the hazard potential of an asteroid using its known details.\n2)Discover asteroids making dangerously close approaches to Earth on a specific date.\n3)Exit")
+        model_opt = int(input("Enter option number: "))
+        
+        if model_opt==1:
+            my_model()
 
-    print("Welcome to AstroGuard\nPlease select an option corresponding to the action you wish to perform.\n1)Predict the hazard potential of an asteroid using its known details.\n2)Discover asteroids making dangerously close approaches to Earth on a specific date.\n")
-    model_opt = int(input("Enter option number: "))
-    
-    if model_opt==1:
-        my_model()
+        elif model_opt==2:
+            print("\nPlease select an option corresponding to the action you wish to perform.\n1)Today’s Possibly Hazardous NEOs.\n2)Possibly Hazardous NEOs for some other date.")
+            option = int(input("Enter Option number: "))
+            today_data=fetch_risky_neo(option)
+            if today_data:
+                for val in today_data:
+                    print(f"Name: {val[1]} Est. maximum diameter: {val[2]} Est. minimum diameter:{val[3]} Velocity: {val[4]} Miss distance: {val[5]} Absolute Magnitude: {val[6]}")
+                print("Want to predict hazard level for any of these?\n1)yes\n2)no")
+                inner_opt=int(input("Enter option number: "))
+                if inner_opt == 1:
+                    my_model()
+                else:
+                    print("Exiting...\n")
 
-    elif model_opt==2:
-        print("\nPlease select an option corresponding to the action you wish to perform.\n1)Today’s Possibly Hazardous NEOs.\n2)Possibly Hazardous NEOs for some other date.")
-        option = int(input("Enter Option number: "))
-        today_data=fetch_risky_neo(option)
-        if today_data:
-            for val in today_data:
-                print(f"Name: {val[1]} Avg diameter:{(val[2]+val[3])/2} Velocity: {val[4]} Miss distance: {val[5]}")
-            print("Want to predict hazard level for any of these?\n1)yes\n2)no")
-            inner_opt=input("Enter option number: ")
-            if inner_opt == 1:
-                my_model()
             else:
-                print("Alright then, have a great day ahead.")
-        else:
-            print("Sorry, no data available for this date.")
+                print("Sorry, no data available for this date.\n")
 
-    else:
-        print("Invalid Option")
-    
+        elif model_opt==3:
+            print("Alright then, have a great day ahead.\n")
+            sys.exit(1)
+
+        else:
+            print("Invalid Option\n")
+        
 if __name__ == "__main__":
     main()
 
