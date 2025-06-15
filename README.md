@@ -1,23 +1,44 @@
-Model Description: Asteroid Hazard Prediction
-This classification model is designed to predict whether a Near-Earth Object (NEO) is potentially hazardous based on its physical and orbital parameters. 
-The model uses supervised machine learning techniques implemented with Python’s Scikit-learn library, focusing on basic yet effective algorithm like Random Forests.
+## *AstroGuard*-Asteroid Hazard Prediction 
 
-Input Features
-The model takes the following key parameters as input:
-Average Diameter (km): Mean size of the asteroid, calculated from estimated minimum and maximum diameters.
-Estimated Diameter Minimum (km): Lower bound of the asteroid’s estimated size.
-Estimated Diameter Maximum (km): Upper bound of the asteroid’s estimated size.
-Relative Velocity (km/h): Speed of the asteroid relative to Earth.
-Miss Distance (km): Closest distance the asteroid will approach Earth.
-Absolute Magnitude: A measure of the asteroid’s brightness, indirectly related to size and reflectivity.
+A machine learning project that predicts whether a Near-Earth Object (NEO) is potentially hazardous using physical and orbital characteristics. Built using **Python** and **Scikit-learn**, the model uses a **Random Forest Classifier** to perform binary classification with a focus on real-world NEO data from NASA.
 
-Output
-Hazardous: A binary classification label (`True` or `False`) indicating whether the asteroid is classified as a potential hazard based on its parameters.
+---
 
-Model Workflow
-1. Data preprocessing: Cleansing, feature engineering (e.g., average diameter calculation), and handling class imbalance using oversampling techniques.
-2. Training: The model is trained on historical NEO data with known hazard labels using a Random Forest classifier.
-3. Evaluation: Performance is assessed via accuracy, precision, recall, F1-score, and confusion matrix to understand classification effectiveness, particularly for the minority hazardous class.
-4. Prediction: Once trained, the model can classify new asteroid data input by users to assess potential hazard.
+### Key Features
+- **Inputs**:
+  - Estimated Diameter Min/Max (km)
+  - Average Diameter (computed)
+  - Relative Velocity (km/h)
+  - Miss Distance (km)
+  - Absolute Magnitude  
+- **Output**: `True` or `False` — whether the NEO is potentially hazardous.
 
-**The model currently achieves 92% accuracy with moderate recall (54%) on hazardous asteroid detection, indicating room for improvement in identifying rare but critical cases.
+---
+
+### Model Workflow
+1. **Data Preprocessing**:
+   - Cleansing and feature engineering (e.g., calculating average diameter)
+   - Class imbalance handled via oversampling techniques  
+2. **Training**:
+   - Supervised learning with **Random Forest** on labeled NEO data  
+3. **Evaluation**:
+   - Accuracy: ~92%, with moderate recall (~54%) on hazardous cases  
+4. **Prediction**:
+   - Model predicts hazard risk from user-provided asteroid details
+
+---
+
+### NASA API Integration
+- Integrated **NASA NEO Feed API** to fetch real-time or historical asteroid approach data
+- Users can:
+  - Retrieve NEOs approaching Earth on a specific date
+  - View physical/orbital parameters of each asteroid
+  - Input fetched data into the model for hazard prediction
+
+---
+
+### Interface
+- **Command-Line Interface (CLI)** with interactive options:
+  1. Predict hazard of a known asteroid using manual input
+  2. Discover close-approaching NEOs on any given date using NASA API
+  3. Reuse fetched NEO data for classification
