@@ -37,9 +37,10 @@ def my_model():
     feature_names = ['avg_diameter','est_diameter_min', 'est_diameter_max', 'relative_velocity', 'miss_distance', 'absolute_magnitude']
     input_val=pd.DataFrame([[avg_dia,min_dia,max_dia,rela_vel,miss_dis,abs_mag]], columns=feature_names)
 
-    y_pred=clf.predict(input_val)
+    y_proba = clf.predict_proba(input_val)[:, 1]
+    y_pred2 = (y_proba > 0.47).astype(int)
     
-    if y_pred[0]:
+    if y_pred2[0]:
         print("The Near Earth Object is hazardous and should be monitored.\n")
     else:
         print("The Near Earth Object is not hazardous.\n")
