@@ -15,10 +15,6 @@ A machine learning project that predicts whether a Near-Earth Object (NEO) is po
 
 ---
 
-Here’s your updated **Model Workflow** with a professional mention of the threshold adjustment:
-
----
-
 ### Model Workflow
 1. **Data Preprocessing**:
    * Cleansing and feature engineering (e.g., calculating average diameter)
