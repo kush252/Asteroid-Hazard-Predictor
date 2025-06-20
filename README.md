@@ -15,16 +15,21 @@ A machine learning project that predicts whether a Near-Earth Object (NEO) is po
 
 ---
 
+Here’s your updated **Model Workflow** with a professional mention of the threshold adjustment:
+
+---
+
 ### Model Workflow
 1. **Data Preprocessing**:
-   - Cleansing and feature engineering (e.g., calculating average diameter)
-   - Class imbalance handled via oversampling techniques  
+   * Cleansing and feature engineering (e.g., calculating average diameter)
+   * Class imbalance handled via oversampling techniques
 2. **Training**:
-   - Supervised learning with **Random Forest** on labeled NEO data  
+   * Supervised learning with **Random Forest** on labeled NEO data
+   * **Custom classification threshold** added to adjust sensitivity toward hazardous predictions
 3. **Evaluation**:
-   - Accuracy: ~92%, with moderate recall (~54%) on hazardous cases  
+   * Accuracy: \~90%, with moderate recall (\~61%) on hazardous cases
 4. **Prediction**:
-   - Model predicts hazard risk from user-provided asteroid details
+   * Model predicts hazard risk from user-provided asteroid details
 
 ---
 
