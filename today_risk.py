@@ -22,39 +22,27 @@ def fetch_risky_neo(option):
     neos=data['near_earth_objects']
 
 
-    final_data=[]
+    final_data = []
+
     for obj in neos[date]:
-        for approach in obj['close_approach_data']:
-        
-            current=[]
-            if obj['close_approach_data']:
-                current.append(approach['close_approach_date'])
-            current.append(obj['name'])
-            if obj['estimated_diameter']:
-                current.append(obj['estimated_diameter']['kilometers']['estimated_diameter_max'])
-            else:
-                current.append(-1)
+        name = obj.get('name', 'Unknown')
+        est_diam = obj.get('estimated_diameter', {}).get('kilometers', {})
+        diameter_max = est_diam.get('estimated_diameter_max', -1)
+        diameter_min = est_diam.get('estimated_diameter_min', -1)
+        abs_mag = obj.get('absolute_magnitude_h', -1)
 
-            if obj['estimated_diameter']:
-                current.append(obj['estimated_diameter']['kilometers']['estimated_diameter_min'])
-            else:
-                current.append(-1)
+        for approach in obj.get('close_approach_data', []):
+            row = [
+                approach.get('close_approach_date', 'N/A'),
+                name,
+                diameter_max,
+                diameter_min,
+                approach.get('relative_velocity', {}).get('kilometers_per_hour', -1),
+                approach.get('miss_distance', {}).get('kilometers', -1),
+                abs_mag
+            ]
+            final_data.append(row)
 
-            if obj['close_approach_data']:
-                current.append(approach['relative_velocity']['kilometers_per_hour'])
-            else:
-                current.append(-1)
-
-            if obj['close_approach_data']:
-                current.append(approach['miss_distance']['kilometers'])
-            else:
-                current.append(-1)
-
-            if obj['absolute_magnitude_h']:
-                current.append(obj['absolute_magnitude_h'])
-            else:
-                current.append(-1)
-            final_data.append(current)
 
 
     df = pd.DataFrame(final_data) 
